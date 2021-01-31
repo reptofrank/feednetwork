@@ -37,6 +37,12 @@ class Content
      */
     private $guid;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Feed::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $feed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Content
     public function setGuid(string $guid): self
     {
         $this->guid = $guid;
+
+        return $this;
+    }
+
+    public function getFeed(): ?Feed
+    {
+        return $this->feed;
+    }
+
+    public function setFeed(?Feed $feed): self
+    {
+        $this->feed = $feed;
 
         return $this;
     }
