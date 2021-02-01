@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FeedRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=FeedRepository::class)
@@ -18,14 +20,23 @@ class Feed
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $url;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Unique
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
+    /**
+     * @Assert\NotBlank
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function getId(): ?int
     {
@@ -52,6 +63,18 @@ class Feed
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
