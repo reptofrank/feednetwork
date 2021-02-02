@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="content-80">
+        <div class="form-feed">
+            <form action="{{ path('feed.update', {'id': feed.id}) }}" method="POST">
+                <h3>Edit Feed</h3>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" value="{{ feed.title }}">
+                </div>
+                <div class="mb-3">
+                    <label for="url" class="form-label">URL</label>
+                    <input type="url" name="url" class="form-control" value="{{ feed.url }}">
+                </div>
+                <button class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
