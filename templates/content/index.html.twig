@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="wrapper content-80">
+    <div class="feed-title">
+        <h1>{{ feed.title }}</h1>
+    </div>
+    <div class="feed-content">
+        <ul>
+            {% for content in contents %}
+                <li>
+                    <a href="{{ content.guid }}" target="_blank">
+                        <h5 class="content-title">{{ content.title }}</h5>
+                    </a>
+                    <p class="content-desc">{{ content.description }}</p>
+                    <small>{{ content.pubdate|date('d M Y h:i:s a') }}</small>
+                </li>   
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
