@@ -29,10 +29,13 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+    /**
+     * @Route("/register", name="app_register")
+     */
     public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
         if($request->isMethod('POST')){
-            $user = new User();
+            $user = new User;
             $user->setEmail($_POST['email']);
             $user->setPassword(
                 $encoder->encodePassword($user, $_POST['password'])
@@ -41,7 +44,15 @@ class SecurityController extends AbstractController
                 $_POST['type'] === 'admin' ? 
                 ['ROLE_ADMIN'] : ['ROLE_USER']
             );
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('app_login');
         }
+
+        return $this->render('security/register.html.twig');
     }
 
     /**
