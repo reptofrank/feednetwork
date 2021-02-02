@@ -49,6 +49,8 @@ class FeedController extends AbstractController
      */
     public function update(Feed $feed)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $feed->setTitle($_POST['title']);
         $feed->setUrl($_POST['url']);
         
@@ -64,6 +66,8 @@ class FeedController extends AbstractController
      */
     public function delete(Feed $feed)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $em = $this->getDoctrine()->getManager();
         $em->remove($feed);
 
@@ -71,7 +75,7 @@ class FeedController extends AbstractController
     }
 
     /**
-     * Slugify feed title
+     * create a slug of the feed title
      *
      * A method that converts the title of a place to a slug
      *
