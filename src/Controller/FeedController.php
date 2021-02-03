@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Content;
 use App\Entity\Feed;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,42 +11,66 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FeedController extends AbstractController
 {
-    #[Route('/feed', name: 'feed.index')]
+    /**
+     * @Route("/feed", name="feed.index")
+     */
     public function index(): Response
     {
+        $feeds = $this->getDoctrine()->getRepository(Feed::class)->findAll();
         return $this->render('feed/index.html.twig', [
-            'controller_name' => 'FeedController',
+            'feeds' => $feeds,
         ]);
     }
-
+    
+    
     /**
-     * @Route("/feed/add/{id}", name="feed.add", methods={"GET"})
+     * Show feed's contents
+     * @Route("/feed/{id}", name="feed.view", requirements={"id"="\d+"})
      */
-    public function add(Feed $feed = null)
+    public function view(Feed $feed)
     {
-        return $this->render('feed/add.html.twig', ['feed' => $feed]);
+        $contents = $this->getDoctrine()->getRepository(Content::class)->findBy(['feed' => $feed]);
+        
+        return $this->render('content/feed.html.twig', ['feed' => $feed, 'contents' => $contents]);
     }
-
+    
     /**
+     * @Route("/feed/add", name="feed.add", methods={"GET"})
+     */
+    public function add()
+    {
+        return $this->render('feed/add.html.twig');
+    }
+    
+    
+    /**
+     * @return Response
      * @Route("/feed/store", name="feed.store", methods={"POST"})
      */
     public function store()
     {
         $feed = new Feed;
         $feed->setTitle($_POST['title']);
-        $feed->setSlug($this->slugify($_POST['title']));
         $feed->setUrl($_POST['url']);
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($feed);
         $em->flush();
-
+        
         return $this->redirectToRoute('feed.show', ['feed' => $feed]);
     }
 
     /**
+     * @Route("/feed/edit/{id}", name="feed.edit", methods={"GET"})
+     */
+    public function edit(Feed $feed)
+    {
+        return $this->render('feed/edit.html.twig', ['feed' => $feed]);
+    }
+
+    /**
      * Update feed URL and/or title
-     * @Route("/feed/update/{$id}", name="feed.update", methods={"POST"})
+     * @Route("/feed/update/{id}", name="feed.update", methods={"POST"})
      */
     public function update(Feed $feed)
     {
@@ -57,11 +82,13 @@ class FeedController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->redirectToRoute('feed.show', ['feed' => $feed]);
+        return $this->redirectToRoute('feed.view', ['id' => $feed->getId()]);
     }
 
     /**
      * Delete feed
+     * @param Feed $feed
+     * @return Response 
      * @Route("/feed/delete/{$id}", name="feed.delete", methods={"GET"})
      */
     public function delete(Feed $feed)
@@ -72,22 +99,6 @@ class FeedController extends AbstractController
         $em->remove($feed);
 
         return $this->redirectToRoute('feed.show', ['feed' => $feed]);
-    }
-
-    /**
-     * create a slug of the feed title
-     *
-     * A method that converts the title of a place to a slug
-     *
-     * @param String $title
-     * @return String
-     **/
-    private function slugify(String $title)
-    {
-        $stripped = str_replace("  ", " ", preg_replace('(\/|\(|\))', "", $title));
-        $slug = implode("-", explode(" ", strtolower($stripped)));
-
-        return $slug;
     }
 
 

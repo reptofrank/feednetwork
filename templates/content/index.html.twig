@@ -3,18 +3,18 @@
 {% block body %}
 
 <div class="wrapper content-80">
-    <div class="feed-title">
-        <h1>{{ feed.title }}</h1>
-    </div>
     <div class="feed-content">
         <ul>
             {% for content in contents %}
                 <li>
-                    <a href="{{ content.guid }}" target="_blank">
-                        <h5 class="content-title">{{ content.title }}</h5>
-                    </a>
+                    <h5 class="content-title">
+                        <a href="{{ content.guid }}" target="_blank">{{ content.title }}</a> 
+                        <a class="content-feed-link text-success" href="{{ path('feed.view', {'id': content.feed.id}) }}">
+                            <span><em>{{ content.feed.title }}</em></span>
+                        </a>
+                    </h5>
                     <p class="content-desc">{{ content.description }}</p>
-                    <small>{{ content.pubdate|date('d M Y h:i:s a') }}</small>
+                    
                 </li>   
             {% endfor %}
         </ul>
