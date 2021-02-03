@@ -31,8 +31,8 @@ final class UserFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // 'email' => 'user@axelerant.com',
-            // 'password' => ''
+            'email' => 'user@axelerant.com',
+            'password' => '$2y$13$Xbs3ElBkFprRIezxL7Ec8uyg5Z.336ISGaLX/I9UB4ODO4oBHA2TC'
         ];
     }
 

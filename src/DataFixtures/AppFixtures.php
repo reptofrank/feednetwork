@@ -23,9 +23,9 @@ class AppFixtures extends Fixture
             }
         );
         // User
-        UserFactory::new()->createOne(['email' => 'user@axelerant.com']);
+        UserFactory::new()->createOne(['email' => 'user@axelerant.com', 'roles' => ['ROLE_USER']]);
         // Admin 
-        UserFactory::new()->createOne(['email' => 'admin@axelerant.com']);
+        UserFactory::new()->createOne(['email' => 'admin@axelerant.com', 'roles' => ['ROLE_ADMIN']]);
         
 
         $manager->flush();
