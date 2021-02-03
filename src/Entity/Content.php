@@ -28,11 +28,6 @@ class Content
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $pubdate;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $guid;
@@ -68,18 +63,6 @@ class Content
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPubdate(): ?\DateTimeInterface
-    {
-        return $this->pubdate;
-    }
-
-    public function setPubdate(\DateTimeInterface $pubdate): self
-    {
-        $this->pubdate = $pubdate;
 
         return $this;
     }
