@@ -19,12 +19,12 @@
             <input type="password" name="password" id="inputPassword" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label for="type">Role</label>
-            <select name="type" id="type" class="form-control">
-                <option value="">Select Role</option>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
+            <div class="form-check">
+                <input class="form-check-input" name="type" type="checkbox" value="admin" id="admin">
+                <label class="form-check-label" for="admin">
+                  Admin
+                </label>
+            </div>
         </div>
     
         <input type="hidden" name="_csrf_token"

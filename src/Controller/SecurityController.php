@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
                 $encoder->encodePassword($user, $_POST['password'])
             );
             $user->setRoles(
-                $_POST['type'] === 'admin' ? 
+                isset($_POST['type']) ? 
                 ['ROLE_ADMIN'] : ['ROLE_USER']
             );
 

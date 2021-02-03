@@ -57,7 +57,7 @@ class FeedController extends AbstractController
         $em->persist($feed);
         $em->flush();
         
-        return $this->redirectToRoute('feed.show', ['feed' => $feed]);
+        return $this->redirectToRoute('feed.view', ['id' => $feed->getId()]);
     }
 
     /**
