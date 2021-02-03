@@ -4,9 +4,9 @@ namespace App\DataFixtures;
 
 use App\Factory\ContentFactory;
 use App\Factory\FeedFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class AppFixtures extends Fixture
 {
@@ -22,6 +22,12 @@ class AppFixtures extends Fixture
                 return ['feed' => FeedFactory::random()];
             }
         );
+        // User
+        UserFactory::new()->createOne(['email' => 'user@axelerant.com']);
+        // Admin 
+        UserFactory::new()->createOne(['email' => 'admin@axelerant.com']);
+        
+
         $manager->flush();
     }
 }

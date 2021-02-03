@@ -33,7 +33,6 @@ final class ContentFactory extends ModelFactory
         return [
             'title' => self::faker()->unique()->catchPhrase(),
             'description' => self::faker()->realText(100),
-            'pubdate' => self::faker()->dateTimeBetween('-1 week', '+1 week'),
             'guid' => self::faker()->url()
         ];
     }

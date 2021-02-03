@@ -31,7 +31,8 @@ final class UserFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
+            // 'email' => 'user@axelerant.com',
+            // 'password' => ''
         ];
     }
 
