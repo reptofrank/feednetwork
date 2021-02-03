@@ -19,22 +19,19 @@ class FeedRepository extends ServiceEntityRepository
         parent::__construct($registry, Feed::class);
     }
 
-    // /**
-    //  * @return Feed[] Returns an array of Feed objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Feed[] Returns an array of Feed titles
+     */
+    
+    public function findTitles()
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('f.id, f.title')
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Feed
